@@ -43,5 +43,35 @@
 
   **多用于对象的获取字节码的方式**
 
-  
+
+```java
+public class Reflect {
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        //方式一：Class.forName
+        Class<?> clazz1 = Class.forName("Teacher");
+        System.out.println("clazz1:" + clazz1);
+
+        //方式二：类名.class
+        Class<Teacher> clazz2 = Teacher.class;
+        System.out.println("clazz2:" + clazz2);
+
+        //方式三：对象.getClass()
+        Teacher teacher = new Teacher();
+        Class<? extends Teacher> clazz3 = teacher.getClass();
+        System.out.println("clazz3:" + clazz3);
+
+        //比较三个对象
+        System.out.println("clazz1 == clazz2:" + (clazz1 == clazz2));
+        System.out.println("clazz1 == clazz3:" + (clazz1 == clazz3));
+
+        //结论：同一个字节码文件(*.class)在一次程序运行过程中，只会被加载一次，无论通过哪一种方式获取的Class对象都是同一个
+    }
+
+}
+```
+
+![image-20210703235428258](https://gitee.com/zyx95ovo/pic-bed/raw/master/data/image-20210703235428258.png)
+
+
 
