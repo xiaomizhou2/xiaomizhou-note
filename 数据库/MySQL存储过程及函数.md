@@ -106,4 +106,47 @@ DROP PROCEDURE [IF EXISTS] proc_name;
   END;
   ```
 
-  
+
+
+
+##### 4.2 if 条件判断
+
+语法结构：
+
+```mysql
+IF search_condition THEN statement_list
+[ELSEIF search_condition THEN statement_list] ...
+[ELSE statement_list]
+END IF;
+```
+
+示例：
+
+```mysql
+-- 根据年龄判断所处年龄段
+
+0-18 -- 未成年
+
+18-30 -- 青少年
+
+30-50 -- 中年
+
+50以上 -- 老年
+
+# 实现语法
+CREATE PROCEDURE pro_test4()
+BEGIN
+	-- 定义变量
+	DECLARE age int DEFAULT 18;
+	DECLARE age_desc VARCHAR(50) DEFAULT '';
+	-- IF判断语句
+	IF age >= 0 AND age < 18 THEN SET age_desc = '未成年';
+	ELSEIF age >= 18 AND age <= 30 THEN SET age_desc = '青少年';
+	ELSEIF age > 30 AND age <= 50 THEN SET age_desc = '中年';
+	ELSE SET age_desc = '老年';
+	END IF;
+	-- 查询
+	SELECT age_desc;
+END;
+```
+
