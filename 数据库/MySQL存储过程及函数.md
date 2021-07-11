@@ -12,7 +12,7 @@
 
 
 
-### 2. 创建存储过程
+### 2. 创建及调用存储过程
 
 ```mysql
 CREATE PROCEDURE procedure_name([proc_parameter[, ...]])
@@ -27,7 +27,83 @@ SELECT 'HELLO MYSQL';
 end;
 
 DELIMITER 该关键字用来声明SQL语句的分隔符，默认情况下MySQL
+
+-- 调用存储过程
+CALL procedure_name
 ```
 
 
 
+### 3. 查看及删除存储过程
+
+```mysql
+-- 查询db_name数据库中的所有的存储过程
+SELECT name FROM mysql.proc WHERE db = 'db_name';
+
+-- 查询存储过程的状态信息
+SHOW PROCEDURE status;
+
+-- 查询某个存储过程的定义
+SHOW CREATE PROCEDURE proc_name;
+
+-- 删除存储过程
+DROP PROCEDURE [IF EXISTS] proc_name;
+```
+
+
+
+### 4. 语法
+
+存储过程是可以编程的，意味着可以使用变量、表达式、控制结构来完成比较复杂的功能
+
+##### 4.1 变量
+
+- DECLARE
+
+  通过DECLARE可以定义一个局部变量，该变量的作用范围只能在BEGIN...END块中。
+
+  ```mysql
+  DECLARE var_name[, ...] type [DEFAUIT value]
+  ```
+
+  示例：
+
+  ```mysql
+  CREATE PROCEDURE pro_test2()
+  BEGIN
+  	DECLARE num int DEFAULT 5;
+  	SELECT num;
+  END;
+  ```
+
+- SET
+
+  直接赋值使用SET，可以赋常量或者赋表达式，具体语法如下：
+
+  ```mysql
+  SET var_name = expr[, var_name = expr]...
+  ```
+
+  示例：
+
+  ```mysql
+  CREATE PROCEDURE pro_test3()
+  BEGIN
+  	DECLARE NAME VARCHAR(20);
+  	SET NAME = 'MYSQL';
+  	SELECT NAME;
+  END;
+  ```
+
+  也可以使用SELECT...INTO方式进行赋值操作：
+
+  ```mysql
+  CREATE PROCEDURE pro_test5()
+  BEGIN
+  	DECLARE countnum int;
+  	SELECT COUNT(*) INTO countnum FROM city;
+  	SELECT countnum;
+  END;
+  ```
+
+  
