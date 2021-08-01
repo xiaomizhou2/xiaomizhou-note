@@ -18,4 +18,4 @@
 
 ### Redis
 
-- [ ] [Redis基础](./数据库/Redis/Redis基础.md)
+- [x] [Redis基础](./数据库/Redis/Redis基础.md)
