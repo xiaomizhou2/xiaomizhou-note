@@ -90,7 +90,7 @@ select查询的序列号，是一组数字，表示查询中执行select子句�
 | SIMPLE       | 简单的select查询，查询中不包含子查询或者UNION                |
 | PRIMARY      | 查询中若包含任何复杂的子查询，最外层查询标记为该标识         |
 | SUBQUERY     | 在SELECT或WHERE列表中包含了子查询                            |
-| DERIBVED     | 在FROM列表中包含的子查询，被标记为DERIVED(衍生)MYSQL会递归执行这些子查询，把结果放在临时表中 |
+| DERIVED      | 在FROM列表中包含的子查询，被标记为DERIVED(衍生)MYSQL会递归执行这些子查询，把结果放在临时表中 |
 | UNION        | 若第二个SELECT出现在UNION之后，则标记为UNION；若UNION包含在FROM子句的子查询中，外层SELECT将被标记为DERIVED |
 | UNION RESULT | 从UNION表获取结果的SELECT                                    |
 
