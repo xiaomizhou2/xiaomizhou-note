@@ -94,3 +94,101 @@ select查询的序列号，是一组数字，表示查询中执行select子句�
 | UNION        | 若第二个SELECT出现在UNION之后，则标记为UNION；若UNION包含在FROM子句的子查询中，外层SELECT将被标记为DERIVED |
 | UNION RESULT | 从UNION表获取结果的SELECT                                    |
 
+###### 1.3.3 explain 之 table
+
+展示这一行的数据是关于哪一张表的。
+
+###### 1.3.4 explain 之 type
+
+type 显示的是访问类型，是比较重要的一个指标，可取值为
+
+| type   | 含义                                                         |
+| ------ | ------------------------------------------------------------ |
+| NULL   | MySQL不访问任何表，索引，直接返回结果                        |
+| system | 表只有一行记录(等于系统表),这是const类型的特例，一般不会出现 |
+| const  | 表示通过索引一次就找到了，const用于比较 primary key 或者 unique 索引。因为只匹配一行数据，所以很快。如将主键置于 where 列表中，MySQL 就能将该查询转换为一个常量。const 将“主键”或“唯一”索引的所有部分与常量值进行比较 |
+| eq_ref | 类似ref，区别在于使用的是唯一索引，使用主键的关联查询，关联查询出的记录只有一条。常见于主键或唯一索引扫描 |
+| ref    | 非唯一索引扫描，返回匹配某个单独值得所有行。本质上也是一种索引访问，返回所有匹配某个单独值的所有行（多个） |
+| range  | 只检索给定返回的行，使用一个索引来选择行。where 之后出现 between ，<，>，in 等操作 |
+| index  | index 与 ALL 的区别为 index 类型只是遍历了索引树，通常比 ALL 快，ALL 是遍历数据文件 |
+| all    | 将遍历全表以找到匹配的行                                     |
+
+###### 1.3.5 explain 之 key
+
+```
+possible_keys:显示可能应用在这张表的索引，一个或多个
+
+key：实际使用的索引，如果为NULL，则没有使用索引
+
+key_len:表示索引中使用的字节数，该值为索引字段最大可能长度，并非实际长度，在不损失精度的前提下，长度越短越好。
+
+```
+
+###### 1.3.6 explain 之 rows
+
+扫描行的数量。
+
+###### 1.3.7 explain 之 extra
+
+其他的额外的执行计划信息，在该列展示
+
+| extra           | 含义                                                         |
+| --------------- | ------------------------------------------------------------ |
+| using filesort  | 说明mysql会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取，称为**文件排序** |
+| using temporary | 使用了临时表保存中间结果，MySQL在对查询结果排序时使用临时表。常见于 order by 和 group by |
+| using index     | 表示相应的select 操作使用了覆盖索引，避免访问表的数据行，效率不错 |
+
+
+
+##### 1.4 show profile 分析 SQL
+
+MySQL 从 5.0.37 版本开始增加了对 show profiles 和 show profile 语句的支持。show profiles 能够在做SQL优化时帮助我们了解时间都耗费到哪里去了。
+
+
+
+通过 have_profiling 参数，能够看到当前MySQL是否支持profile
+
+![image-20210808152642003](https://gitee.com/zyx95ovo/pic-bed/raw/master/data/image-20210808152642003.png)
+
+默认 profiling 是关闭的，可以通过 set 语句在 Session 级别开启 profiling
+
+![image-20210808153541103](https://gitee.com/zyx95ovo/pic-bed/raw/master/data/image-20210808153541103.png)
+
+```mysql
+set profiling=1; //开启 profiling 开关
+```
+
+通过profile，我们能够更清楚地了解SQL执行的过程。  
+
+1. 执行 show profiles 指令，来查看SQL语句执行的耗时
+
+   ![image-20210808154746872](https://gitee.com/zyx95ovo/pic-bed/raw/master/data/image-20210808154746872.png)
+
+2. 通过 show profile for query query_id 语句可以查看到该SQL执行过程中每个线程的状态和消耗时间
+
+    ![image-20210808155003189](https://gitee.com/zyx95ovo/pic-bed/raw/master/data/image-20210808155003189.png)
+
+```
+TIP:
+	Sending data 状态表示 MySQL 线程开始访问数据行并把结果返回给客户端，而不仅仅是返回客户端。由于在 Sending data 状态下，MySQL 线程往往需要做大量的磁盘读取操作，所以经常是整个查询中耗时最长的状态。
+```
+
+在获取到最消耗时间的线程状态后，MySQL支持进一步选择 all、cpu、block io、context switch、page faults 等明细类型查看MySQL在使用什么资源上耗费了过高的时间。
+
+
+
+##### 1.5 trace 分析优化器执行计划
+
+MySQL 5.6 提供了对SQL的跟踪 trace，通过 trace 文件能够进一步了解为什么优化器选择A计划，而不是B计划
+
+打开trace ，设置格式为json，并设置 trace 最大能够使用的内存大小，避免解析过程中因为默认内存过小而不能够完整展示。
+
+```mysql
+set optimizer_trace="enabled=on",end_markers_in_json=on;
+
+set optimizer_trace_max_mem_size=1000000;
+
+-- trace 跟踪日志放在 information_schema.optimizer_trace 
+select * from information_schema.optimizer_trace;
+```
+
