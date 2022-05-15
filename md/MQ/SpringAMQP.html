@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>AMQP | 小米粥的主页</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/xiaomizhou-note/img/index/logo.png">
+    <meta name="description" content=" ">
+    
+    <link rel="preload" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css" as="style"><link rel="preload" href="/xiaomizhou-note/assets/js/app.94440c6d.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/2.26962873.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/12.8635db46.js" as="script"><link rel="prefetch" href="/xiaomizhou-note/assets/js/10.9eb7487c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/11.0def2499.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/13.25910b4c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/14.7705ca2f.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/15.60cce906.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/16.21956f59.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/17.0fd58fdc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/18.46c7555a.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/19.e3d08432.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/20.a37b49d3.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/21.91702eeb.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/3.dd292d4b.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/4.d6cdcb57.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/5.4f712cfc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/6.d7e152ce.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/7.d2f588b2.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/8.6fe0feb4.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/9.e32712f1.js">
+    <link rel="stylesheet" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/xiaomizhou-note/" class="home-link router-link-active"><img src="/xiaomizhou-note/img/index/logo.png" alt="小米粥的主页" class="logo"> <span class="site-name can-hide">小米粥的主页</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>阅读指南</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/xiaomizhou-note/md/guide-to-reading.html" class="sidebar-link">/md/guide-to-reading.html</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="amqp"><a href="#amqp" class="header-anchor">#</a> AMQP</h3> <p>Advanced Message Queuing Protocol，是用于在应用程序或之间传递业务消息的开放标准。该协议与语言和平台无关，更符合微服务中独立性的要求。</p> <h3 id="spring-amqp"><a href="#spring-amqp" class="header-anchor">#</a> Spring AMQP</h3> <p>发送消息：</p> <ol><li><p>引入spring-amqp的依赖</p></li> <li><p>配置RabbitMQ地址</p></li> <li><p>利用RabbitTemplate的convertAndSend方法发送消息</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">SpringRunner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@SpringBootTest</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ApiTest</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">RabbitTemplate</span> rabbitTemplate<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_simpleQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">String</span> queueName <span class="token operator">=</span> <span class="token string">&quot;simple.queue&quot;</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> message <span class="token operator">=</span> <span class="token string">&quot;hello,spring amqp&quot;</span><span class="token punctuation">;</span>
+
+        rabbitTemplate<span class="token punctuation">.</span><span class="token function">convertAndSend</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></li></ol> <p>接收消息：</p> <ol><li><p>配置RabbitMQ地址</p></li> <li><p>配置监听类进行监听接收消息</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpringRabbitListener</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@RabbitListener</span><span class="token punctuation">(</span>queues <span class="token operator">=</span> <span class="token string">&quot;simple.queue&quot;</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">listenSimpleQueueMessage</span><span class="token punctuation">(</span><span class="token class-name">String</span> msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;消费者接收到消息：【&quot;</span> <span class="token operator">+</span> msg <span class="token operator">+</span> <span class="token string">&quot;】&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></li></ol> <h4 id="work-queue-工作队列"><a href="#work-queue-工作队列" class="header-anchor">#</a> Work Queue 工作队列</h4> <p><img src="https://gitee.com/zyx95ovo/pic-bed/raw/master/data/20210826164942.png" alt=""></p> <p>工作队列，可以提高消息处理速度，避免队列消息堆积</p> <p>具体实现：一个队列绑定多个消费者</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/xiaomizhou-note/assets/js/app.94440c6d.js" defer></script><script src="/xiaomizhou-note/assets/js/2.26962873.js" defer></script><script src="/xiaomizhou-note/assets/js/12.8635db46.js" defer></script>
+  </body>
+</html>

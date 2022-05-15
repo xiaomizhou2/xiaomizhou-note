@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>docker 镜像结构 | 小米粥的主页</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/xiaomizhou-note/img/index/logo.png">
+    <meta name="description" content=" ">
+    
+    <link rel="preload" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css" as="style"><link rel="preload" href="/xiaomizhou-note/assets/js/app.94440c6d.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/2.26962873.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/8.6fe0feb4.js" as="script"><link rel="prefetch" href="/xiaomizhou-note/assets/js/10.9eb7487c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/11.0def2499.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/12.8635db46.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/13.25910b4c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/14.7705ca2f.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/15.60cce906.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/16.21956f59.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/17.0fd58fdc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/18.46c7555a.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/19.e3d08432.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/20.a37b49d3.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/21.91702eeb.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/3.dd292d4b.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/4.d6cdcb57.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/5.4f712cfc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/6.d7e152ce.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/7.d2f588b2.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/9.e32712f1.js">
+    <link rel="stylesheet" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/xiaomizhou-note/" class="home-link router-link-active"><img src="/xiaomizhou-note/img/index/logo.png" alt="小米粥的主页" class="logo"> <span class="site-name can-hide">小米粥的主页</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>阅读指南</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/xiaomizhou-note/md/guide-to-reading.html" class="sidebar-link">/md/guide-to-reading.html</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="docker-镜像结构"><a href="#docker-镜像结构" class="header-anchor">#</a> docker 镜像结构</h3> <p>镜像就是将应用程序及其需要的系统函数库、环境、配置、依赖打包而成。</p> <ol><li>基础镜像：应用依赖的系统函数库、环境、配置、文件等</li> <li>层：在基础镜像的基础上添加安装包、依赖、配置等，每次操作都形成新的一层。</li> <li>入口：镜像运行入口，一般是程序启动的脚本和参数</li></ol> <h3 id="dockerfile"><a href="#dockerfile" class="header-anchor">#</a> Dockerfile</h3> <p><strong>Dockerfile</strong>就是一个文本文件，其中包含一个个的指令，用指令来说明要执行什么操作来构建镜像。每一个指令都会形成一层Layer。</p> <table><thead><tr><th>指令</th> <th>说明</th> <th>示例</th></tr></thead> <tbody><tr><td>FROM</td> <td>指定基础镜像</td> <td>FROM centos:6</td></tr> <tr><td>ENV</td> <td>设置环境变量,可在后面指令使用</td> <td>ENV key value</td></tr> <tr><td>COPY</td> <td>拷贝本地文件到镜像的指定目录</td> <td>COPY ./mysql-5.7.rpm /tmp</td></tr> <tr><td>RUN</td> <td>执行Linux的shell命令,一般是安装过程的命令</td> <td>RUN yum install gcc</td></tr> <tr><td>EXPOSE</td> <td>指定容器运行时监听的端口,给镜像使用者看的</td> <td>EXPOSE 8888</td></tr> <tr><td>ENTRYPOINT</td> <td>镜像中应用的启动命令,容器运时调用</td> <td>ENTRYPOINT java -jar xx.jar</td></tr></tbody></table> <p><a href="https://docs.docker.com/engine/reference/builder/" target="_blank" rel="noopener noreferrer">语法doc<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>dockerfile 构建示例</p> <div class="language- extra-class"><pre class="language-text"><code># 指定基础镜像
+FROM ubuntu:16.04
+# 配置环境变量，JDK的安装目录
+ENV JAVA_DIR=/usr/local
+
+# 拷贝jdk和java项目的包
+COPY ./jdk8.tar.gz $JAVA_DIR/
+COPY ./docker-demo.jar /tmp/app.jar
+
+# 安装JDK
+RUN cd $JAVA_DIR \
+ &amp;&amp; tar -xf ./jdk8.tar.gz \
+ &amp;&amp; mv ./jdk1.8.0_144 ./java8
+ 
+# 配置环境变量
+ENV JAVA_HOME=$JAVA_DIR/java8
+ENV PATH=$PATH:$JAVA_HOME/bin
+
+# 暴露端口
+EXPOSE 8090
+
+# 入口 java项目的启动命令
+ENTRYPOINT java -jar /tmp/app.jar
+</code></pre></div><p>构建项目命令</p> <div class="language- extra-class"><pre class="language-text"><code># . dockerfile 所在目录
+
+docker build -t &lt;镜像名称&gt;:&lt;版本号&gt; .
+</code></pre></div><h4 id="现成的安装好jdk的基础镜像名称-java-8-alpine"><a href="#现成的安装好jdk的基础镜像名称-java-8-alpine" class="header-anchor">#</a> 现成的安装好jdk的基础镜像名称  <strong>java:8-alpine</strong></h4> <h3 id="dokcercompose"><a href="#dokcercompose" class="header-anchor">#</a> DokcerCompose</h3> <p>Docker Compose 可以基于Compose文件帮我们快速的部署分布式应用，而无需手动一个个创建和运行容器</p> <p>Compose文件是一个文本文件，通过指令定义集群中的每个容器如何运行</p> <p>配置文件示例</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">&quot;3.8&quot;</span>
+
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> mysql<span class="token punctuation">:</span>5.7.25
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span> MYSQL_ROOT_PASSWORD<span class="token punctuation">:</span><span class="token number">123</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /tmp/mysql/data<span class="token punctuation">:</span>/var/lib/mysql
+      <span class="token punctuation">-</span> /tmp/mysql/conf/hmy.cnf<span class="token punctuation">:</span>/etc/mysql/conf.d/hmy.cnf
+  <span class="token key atrule">web</span><span class="token punctuation">:</span>
+    <span class="token key atrule">build</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 8090<span class="token punctuation">:</span><span class="token number">8090</span>
+</code></pre></div><h3 id="docker私有镜像仓库"><a href="#docker私有镜像仓库" class="header-anchor">#</a> Docker私有镜像仓库</h3> <p>搭建镜像仓库可以基于Docker官方提供的DockerRegistry来实现</p> <h4 id="简化版镜像仓库"><a href="#简化版镜像仓库" class="header-anchor">#</a> 简化版镜像仓库</h4> <p>Docker官方的Docker Registry 是一个基础版本的Docker镜像仓库，具备仓库管理的完整功能，但是没有图形化界面</p> <p>搭建命令：</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">docker</span> run -d <span class="token punctuation">\</span>
+    --restat<span class="token operator">=</span>always <span class="token punctuation">\</span>
+    --name registry <span class="token punctuation">\</span>
+    -p <span class="token number">5000</span>:5000
+    -v registry-data:/var/lib/registry <span class="token punctuation">\</span>
+    registry
+</code></pre></div><h4 id="带有图形化界面的仓库版本"><a href="#带有图形化界面的仓库版本" class="header-anchor">#</a> 带有图形化界面的仓库版本</h4> <p>使用Docker Compose 部署带有图形化界面的Docker Registry</p> <div class="language- extra-class"><pre class="language-text"><code>version: '3.0'
+services: 
+    registry: 
+        image: registry
+        volumes: 
+          - ./registry-data:/var/lib/registry
+    ui:
+        image: joxit/docker-registry-ui:static
+        ports:
+          - 8080:80
+        environment:
+          - REGISTRY_TITLE=私有仓库名称
+          - REGISTRY_URL=http://registry:5000
+        depends_on:
+          - registry
+</code></pre></div><h4 id="在私有仓库推送或拉取镜像"><a href="#在私有仓库推送或拉取镜像" class="header-anchor">#</a> 在私有仓库推送或拉取镜像</h4> <p>推送镜像到私有镜像仓库必须先tag</p> <div class="language- extra-class"><pre class="language-text"><code># 1. 重新tag本地镜像，名字前缀为私有仓库地址
+docker tag nginx:latest ip:port/nginx:1.0
+
+# 2.推送镜像
+docker push ip:port/nginx:1.0
+
+# 3.拉取镜像
+docker pull ip:port/nginx:1.0
+
+</code></pre></div><p>​</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/xiaomizhou-note/assets/js/app.94440c6d.js" defer></script><script src="/xiaomizhou-note/assets/js/2.26962873.js" defer></script><script src="/xiaomizhou-note/assets/js/8.6fe0feb4.js" defer></script>
+  </body>
+</html>

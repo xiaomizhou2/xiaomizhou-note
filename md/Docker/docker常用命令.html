@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>小米粥的主页</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/xiaomizhou-note/img/index/logo.png">
+    <meta name="description" content=" ">
+    
+    <link rel="preload" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css" as="style"><link rel="preload" href="/xiaomizhou-note/assets/js/app.94440c6d.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/2.26962873.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/10.9eb7487c.js" as="script"><link rel="prefetch" href="/xiaomizhou-note/assets/js/11.0def2499.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/12.8635db46.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/13.25910b4c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/14.7705ca2f.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/15.60cce906.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/16.21956f59.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/17.0fd58fdc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/18.46c7555a.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/19.e3d08432.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/20.a37b49d3.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/21.91702eeb.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/3.dd292d4b.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/4.d6cdcb57.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/5.4f712cfc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/6.d7e152ce.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/7.d2f588b2.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/8.6fe0feb4.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/9.e32712f1.js">
+    <link rel="stylesheet" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/xiaomizhou-note/" class="home-link router-link-active"><img src="/xiaomizhou-note/img/index/logo.png" alt="小米粥的主页" class="logo"> <span class="site-name can-hide">小米粥的主页</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>阅读指南</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/xiaomizhou-note/md/guide-to-reading.html" class="sidebar-link">/md/guide-to-reading.html</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">###################################镜像命令###########################</span>
+<span class="token comment"># 下载镜像文件</span>
+<span class="token function">docker</span> pull 镜像名称:版本号
+<span class="token comment"># 查询所有本地镜像</span>
+<span class="token function">docker</span> images
+<span class="token comment"># 删除镜像</span>
+<span class="token function">docker</span> rmi <span class="token punctuation">[</span>镜像ID/镜像名称<span class="token punctuation">]</span>
+<span class="token comment"># 镜像导出到本地</span>
+<span class="token function">docker</span> save -o <span class="token punctuation">[</span>文件名<span class="token punctuation">]</span> <span class="token punctuation">[</span>镜像名称:tag<span class="token punctuation">]</span>
+<span class="token comment"># 将本地镜像进行加载</span>
+<span class="token function">docker</span> load -i <span class="token punctuation">[</span>文件名<span class="token punctuation">]</span>
+
+<span class="token comment">###################################容器命令###########################</span>
+<span class="token comment"># 查询所有实例</span>
+<span class="token function">docker</span> <span class="token function">ps</span> -a
+<span class="token comment"># 进入容器实例进行交互</span>
+<span class="token function">docker</span> <span class="token builtin class-name">exec</span> -it <span class="token punctuation">[</span>容器ID/容器Name<span class="token punctuation">]</span> <span class="token function">bash</span>
+<span class="token comment">#docker 容器自动重启</span>
+<span class="token function">docker</span> update <span class="token operator">&lt;</span>容器ID<span class="token operator">&gt;</span> --restart<span class="token operator">=</span>always
+<span class="token comment"># 删除容器</span>
+<span class="token function">docker</span> <span class="token function">rm</span> <span class="token operator">&lt;</span>容器ID<span class="token operator">&gt;</span>
+<span class="token comment"># 查看容器运行日志 添加 -f 持续查看日志</span>
+<span class="token function">docker</span> logs <span class="token punctuation">[</span>容器ID<span class="token punctuation">]</span>
+<span class="token comment"># 暂停容器</span>
+<span class="token function">docker</span> pause
+<span class="token comment"># 恢复容器</span>
+<span class="token function">docker</span> unpause
+
+<span class="token comment">###############################docker run 命令详解#######################</span>
+<span class="token comment"># 创建并运行一个容器</span>
+<span class="token function">docker</span> run 
+<span class="token comment"># 给容器起名字</span>
+-- name
+<span class="token comment"># 将宿主机端口与容器端口进行映射绑定</span>
+-p 宿主机端口:容器端口
+<span class="token comment"># 后台运行容器</span>
+-d
+<span class="token comment"># 最后跟上镜像名称</span>
+    
+<span class="token comment"># 将容器文件目录挂载到宿主机</span>
+-v <span class="token punctuation">[</span>宿主机路径<span class="token punctuation">]</span>:<span class="token punctuation">[</span>容器路径<span class="token punctuation">]</span>
+
+<span class="token comment">##############################操作数据卷##############################</span>
+<span class="token function">docker</span> volume <span class="token punctuation">[</span>command<span class="token punctuation">]</span>
+
+- create 创建一个volume 
+ 
+- inspect 显示一个或多个volume的信息
+
+- <span class="token function">ls</span> 列出所有的volume 
+ 
+- prune 删除未使用的volume 
+ 
+- <span class="token function">rm</span> 删除一个或多个指定的volume
+
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/xiaomizhou-note/assets/js/app.94440c6d.js" defer></script><script src="/xiaomizhou-note/assets/js/2.26962873.js" defer></script><script src="/xiaomizhou-note/assets/js/10.9eb7487c.js" defer></script>
+  </body>
+</html>

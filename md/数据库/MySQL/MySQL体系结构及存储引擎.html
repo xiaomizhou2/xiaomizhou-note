@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>一、MySQL体系结构 | 小米粥的主页</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/xiaomizhou-note/img/index/logo.png">
+    <meta name="description" content=" ">
+    
+    <link rel="preload" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css" as="style"><link rel="preload" href="/xiaomizhou-note/assets/js/app.94440c6d.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/2.26962873.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/14.7705ca2f.js" as="script"><link rel="prefetch" href="/xiaomizhou-note/assets/js/10.9eb7487c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/11.0def2499.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/12.8635db46.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/13.25910b4c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/15.60cce906.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/16.21956f59.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/17.0fd58fdc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/18.46c7555a.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/19.e3d08432.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/20.a37b49d3.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/21.91702eeb.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/3.dd292d4b.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/4.d6cdcb57.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/5.4f712cfc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/6.d7e152ce.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/7.d2f588b2.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/8.6fe0feb4.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/9.e32712f1.js">
+    <link rel="stylesheet" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/xiaomizhou-note/" class="home-link router-link-active"><img src="/xiaomizhou-note/img/index/logo.png" alt="小米粥的主页" class="logo"> <span class="site-name can-hide">小米粥的主页</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>阅读指南</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/xiaomizhou-note/md/guide-to-reading.html" class="sidebar-link">/md/guide-to-reading.html</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="一、mysql体系结构"><a href="#一、mysql体系结构" class="header-anchor">#</a> 一、MySQL体系结构</h1> <p><img src="https://gitee.com/zyx95ovo/pic-bed/raw/master/data/image-20210712180655182.png" alt="image-20210712180655182"></p> <p>整个MySQL Server由以下组成：</p> <ul><li>Connection Pool:连接池组件</li> <li>Management Services &amp; Utilities：管理服务和工具组件</li> <li>SQL Interface：SQL接口组件</li> <li>Parser：查询分析器组件</li> <li>Optimizer：优化器组件</li> <li>Caches &amp; Buffers：缓冲池组件</li> <li>Pluggable Storage Engines：存储引擎</li> <li>File System：文件系统</li></ul> <h1 id="二、存储引擎"><a href="#二、存储引擎" class="header-anchor">#</a> 二、存储引擎</h1> <h3 id="_1-存储引擎概述"><a href="#_1-存储引擎概述" class="header-anchor">#</a> 1. 存储引擎概述</h3> <ul><li>和大多数的数据库不同，MySQL中有一个存储引擎的概念，针对不同的存储需求可以选择最优的存储引擎</li> <li>存储引擎就是存储数据，建立索引，更新查询数据等等技术的实现方式。存储引擎是基于表的，而不是基于库的。所以存储引擎也可被称为表类型。</li> <li>Oracle，SqlServer等数据库只有一种存储引擎。MySQL提供了插件式的存储引擎架构。所以MySQL存在多种存储引擎，可以根据需要使用相应引擎，或者编写存储引擎。</li> <li>MySQL5.0支持的存储引擎包含：InnoDB、MyISAM、BDB、MEMORY、MERGE、EXAMPLE、NDB Cluster、ARCHIVE、CSV、BLACKHOLE、FEDERATED等，其中InnoDB和BDB提供事务安全表，其他存储引擎是非事务安全表。</li> <li>SHOW ENGINES 查询当前数据库支持的存储引擎</li> <li>创建新表时如果不指定存储引擎，系统会使用默认的存储引擎，MySQL5.5以前的默认存储引擎是MyISAM，5.5之后是InnoDB</li></ul> <h3 id="_2-存储引擎的特性"><a href="#_2-存储引擎的特性" class="header-anchor">#</a> 2. 存储引擎的特性</h3> <table><thead><tr><th style="text-align:left;">特点</th> <th>InnoDB</th> <th>MyISAM</th> <th>MEMORY</th> <th>MERGE</th> <th>NDB</th></tr></thead> <tbody><tr><td style="text-align:left;">存储限制</td> <td>64TB</td> <td>有</td> <td>有</td> <td>没有</td> <td>有</td></tr> <tr><td style="text-align:left;">事务安全</td> <td>支持</td> <td></td> <td></td> <td></td> <td></td></tr> <tr><td style="text-align:left;">锁机制</td> <td>行锁(适合高并发)</td> <td>表锁</td> <td>表锁</td> <td>表锁</td> <td>行锁</td></tr> <tr><td style="text-align:left;">B树索引</td> <td>支持</td> <td>支持</td> <td>支持</td> <td>支持</td> <td>支持</td></tr> <tr><td style="text-align:left;">哈希索引</td> <td></td> <td></td> <td>支持</td> <td></td> <td></td></tr> <tr><td style="text-align:left;">哈希索引</td> <td>支持(5.6版本之后)</td> <td>支持</td> <td></td> <td></td> <td></td></tr> <tr><td style="text-align:left;">集群索引</td> <td>支持</td> <td></td> <td></td> <td></td> <td></td></tr> <tr><td style="text-align:left;">数据索引</td> <td>支持</td> <td></td> <td></td> <td></td> <td></td></tr> <tr><td style="text-align:left;">索引缓存</td> <td>支持</td> <td>支持</td> <td>支持</td> <td>支持</td> <td>支持</td></tr> <tr><td style="text-align:left;">数据可压缩</td> <td></td> <td>支持</td> <td></td> <td></td> <td></td></tr> <tr><td style="text-align:left;">空间使用</td> <td>高</td> <td>低</td> <td>N/A</td> <td>低</td> <td>低</td></tr> <tr><td style="text-align:left;">内存使用</td> <td>高</td> <td>低</td> <td>中等</td> <td>低</td> <td>高</td></tr> <tr><td style="text-align:left;">批量插入速度</td> <td>低</td> <td>高</td> <td>高</td> <td>高</td> <td>高</td></tr> <tr><td style="text-align:left;">支持外键</td> <td>支持</td> <td></td> <td></td> <td></td> <td></td></tr></tbody></table> <h3 id="_3-innodb特性"><a href="#_3-innodb特性" class="header-anchor">#</a> 3. InnoDB特性</h3> <p>InnoDB存储引擎是MySQL的默认存储引擎，InnoDB存储引擎提供了具有提交、回滚、崩溃恢复能力的事务安全，但是对比MyISAM的存储引擎，InnoDB写的处理效率差一些，并且会占用更多的磁盘空间以保留数据和索引。</p> <p>InnoDB存储引擎不同于其他存储引擎的特点：</p> <ul><li><p>事务控制</p> <div class="language-mysql extra-class"><pre class="language-text"><code>create table goods_innodb(
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(20) NOT NULL,
+    primary key(id)
+)ENGINE=innodb DEFAULT CHARSET=utf8;
+
+-- 手动开启事务
+start transaction;
+-- 插入数据
+insert into goods_innodb(id, name) values(null, 'Meta20');
+-- 提交事务
+commit;
+</code></pre></div></li> <li><p>外键约束</p> <p>MySQL支持外键的存储引擎只有InnoDB，在创建外键的时候，要求父表必须有对应的索引，子表在创建外键的时候，也会自动的创建对应的索引。</p> <p>下面两张表中，country_innodb是父表，country_id为主键索引，city_innodb表是子表，country_id字段为外键，对应country_innodb表的主键country_id。</p> <div class="language-mysql extra-class"><pre class="language-text"><code>create table country_innodb(
+	country_id int NOT NULL AUTO_INCREMENT,
+    country_name varchar(100) NOT NULL,
+    primary key(country_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table city_innodb(
+	city_id int NOT NULL AUTO_INCREMENT,
+    city_name varchar(50) NOT NULL,
+    country_id int NOT NULL,
+    primary key(city_id),
+    key idx_fk_country_id(country_id),
+    CONSTRAINT `fk_city_country` FOREIGN KEY(country_id) REFERENCES country_innodb(country_id) ON DELETE RESTRICT ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into country_innodb values(null, 'China'),(null, 'America'),(null, 'Japan');
+insert into city_innodb values(null, 'xian', 1),(null, 'NewYork', 2),(null, 'Beijing', 1);
+</code></pre></div><p>在创建索引时，可以指定在删除、更新父表时，对子表进行相应的操作，包括RESTRICT、CASCADE、SET NULL和NO ACTION。</p> <p>RESTRICT和NO ACTION相同，是指在子表有关联记录的情况下，父表不能更新；</p> <p>CASCADE表示父表在更新或者删除时，更新或删除子表对应的记录；</p> <p>SET NULL则表示父表在更新或者删除的时候，子表的对应字段被SET NULL。</p> <p>针对上面的两张表，子表的外键指定时 ON DELETE RESTRICT ON UPDATE CASCADE 方式的，那么在主表删除记录的时候，如果子表有对应记录，则不允许删除，主表在更新记录的时候。，如果子表有对应记录，则子表对应更新</p></li> <li><p>存储方式</p> <p>InnoDB存储表和索引有以下两种方式：</p> <ol><li>使用共享表空间存储，这种方式创建的表的表结构保存在.frm文件中，数据和索引保存在innodb_data_home_dir和innodb_data_file_path定义的表空间中，可以是多个文件。</li> <li>使用多表空间存储，这种方式创建的表的表结构仍然存在.frm文件中，但是每个表的数据和索引单独保存在.ibd中</li></ol></li></ul> <h3 id="_4-myisam"><a href="#_4-myisam" class="header-anchor">#</a> 4. MyISAM</h3> <p>MyISAM不支持事务，也不支持外键，其优势是访问的速度快，对事务的完整性没有要求或者以SELECT、INSERT为主的应用基本上都可以使用这个引擎来创建表。</p> <ul><li><p>不支持事务</p> <div class="language-mysql extra-class"><pre class="language-text"><code>create table goods_myisam(
+	id int NOT NULL AUTO_INCREMENT,
+    name varchar(20) NOT NULL,
+    primary key(id)
+)ENGINE=myisam DEFAULT CHARSET=uft8;
+</code></pre></div></li> <li><p>文件存储方式</p> <p>每个MyISAM在磁盘上存储成3个文件，其文件名和表名相同，但拓展名分别为：.frm（存储定义表）、.MYD（MYData，存储数据）、.MYI（MYIndex，存储索引）</p></li></ul> <h3 id="_5-memory"><a href="#_5-memory" class="header-anchor">#</a> 5. Memory</h3> <p>​	Memory存储引擎将表的数据存放在内存中。每个Memory表对应一个磁盘文件，格式是 <strong>.frm</strong> ，该文件只存储表的结构，而其数据文件都是存储在内存中，这样有利于数据的快速处理，提高整个表的效率。Memory类型的表访问非常的快，因为他的数据是存放在内存中的，并且默认使用HASH索引，但是服务一关闭，表中的数据就会丢失。</p> <h3 id="_6-存储引擎的选择"><a href="#_6-存储引擎的选择" class="header-anchor">#</a> 6. 存储引擎的选择</h3> <p>​	在选择存储引擎时，应根据应用系统的特点选择合适的存储引擎。对于复杂的应有洗头膏，还可以根据实际情况选择多种存储引擎进行组合。以下是几种常见的存储引擎的使用环境。</p> <ul><li>InnoDB：是MySQL的默认存储引擎，用于事务处理应有程序，支持外键。如果应用对事务的完整性有比较高的要求，在并发条件下要求数据的一致性，数据操作除了插入和查询以外，还包含很多的更新、删除操作，那么InnoDB存储引擎是比较合适的选择。InnoDB存储引擎除了有效的降低由于删除和更新导致的锁定，还可以确保事务的完整提交和回滚，对于类似于计费系统或者财务系统等对数据准确性要求比较高的系统，InnoDB是最合适的选择。</li> <li>MyISAM：如果应用是以读操作和插入操作为主，只有很少的更新和删除操作，并且对事务完整性、并发性要求不是很高，那么选择这个存储引擎是非常合适的。</li> <li>Memory：将所有数据保存在RAM中，在需要快速定位记录和其他类似数据环境下，可以提供几块的访问。Memory的缺陷就是对表的大小有限制，太大的表无法缓存在内存中，其次要确保表的数据可以恢复，数据库异常终止后表中的数据是可以恢复的。Memory表通常用于更新不太频繁的小表，可以快速得到访问结果</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/xiaomizhou-note/assets/js/app.94440c6d.js" defer></script><script src="/xiaomizhou-note/assets/js/2.26962873.js" defer></script><script src="/xiaomizhou-note/assets/js/14.7705ca2f.js" defer></script>
+  </body>
+</html>

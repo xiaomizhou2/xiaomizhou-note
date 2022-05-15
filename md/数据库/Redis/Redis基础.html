@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redis数据类型 | 小米粥的主页</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/xiaomizhou-note/img/index/logo.png">
+    <meta name="description" content=" ">
+    
+    <link rel="preload" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css" as="style"><link rel="preload" href="/xiaomizhou-note/assets/js/app.94440c6d.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/2.26962873.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/19.e3d08432.js" as="script"><link rel="prefetch" href="/xiaomizhou-note/assets/js/10.9eb7487c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/11.0def2499.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/12.8635db46.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/13.25910b4c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/14.7705ca2f.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/15.60cce906.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/16.21956f59.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/17.0fd58fdc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/18.46c7555a.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/20.a37b49d3.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/21.91702eeb.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/3.dd292d4b.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/4.d6cdcb57.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/5.4f712cfc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/6.d7e152ce.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/7.d2f588b2.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/8.6fe0feb4.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/9.e32712f1.js">
+    <link rel="stylesheet" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/xiaomizhou-note/" class="home-link router-link-active"><img src="/xiaomizhou-note/img/index/logo.png" alt="小米粥的主页" class="logo"> <span class="site-name can-hide">小米粥的主页</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>阅读指南</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/xiaomizhou-note/md/guide-to-reading.html" class="sidebar-link">/md/guide-to-reading.html</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="redis数据类型"><a href="#redis数据类型" class="header-anchor">#</a> Redis数据类型</h3> <h4 id="_1-redis适用场景"><a href="#_1-redis适用场景" class="header-anchor">#</a> <strong>1. Redis适用场景</strong></h4> <ul><li><p>作为缓存使用</p> <ol><li><p>原始业务功能设计，比如秒杀、双十一活动</p></li> <li><p>运营平台监控到的突发高频访问数据，比如突发的热点事件</p></li> <li><p>高频、复杂的统计数据，比如在线人数、投票</p></li></ol></li> <li><p>系统功能优化或升级</p> <ol><li><p>单服务升级集群</p></li> <li><p>Session管理</p></li> <li><p>Token管理</p></li></ol></li></ul> <h4 id="_2-redis数据类型"><a href="#_2-redis数据类型" class="header-anchor">#</a> 2. <strong>redis数据类型</strong></h4> <ol><li><p>string</p></li> <li><p>hash</p></li> <li><p>list</p></li> <li><p>set</p></li> <li><p>sorted_set</p></li></ol> <h4 id="_3-string类型"><a href="#_3-string类型" class="header-anchor">#</a> 3. string类型</h4> <ol><li><strong>string类型基本介绍</strong></li></ol> <ul><li><p>存储的数据：单个数据，最简单的数据存储类型，也是常用的数据存储类型</p></li> <li><p>存储数据的格式：一个存储空间保存一个数据</p></li> <li><p>存储内容：通常使用字符串，如果字符串以整数的形式展示，可以作为数据操作使用</p></li></ul> <ol start="2"><li><strong>string类型数据的基本操作</strong></li></ol> <ul><li><p>添加、修改数据    <code>set key value</code></p></li> <li><p>获取数据   <code>get key</code></p></li> <li><p>删除数据   <code>del key</code></p></li> <li><p>添加、修改多个数据   <code>mset key1 value1 key2 value2 ...</code></p></li> <li><p>获取多个数据   <code>get key1 key2 ...</code></p></li> <li><p>获取数据字符个数   <code>strlen key</code></p></li> <li><p>追加信息到原始信息尾部   <code>append key value</code></p></li></ul> <ol start="3"><li><strong>string类型数据的扩展操作</strong></li></ol> <ul><li>设置数值增加指定范围的值</li></ul> <div class="language-PowerShell extra-class"><pre class="language-powershell"><code><span class="token comment"># 增加1</span>
+incr key
+
+<span class="token comment"># 增加指定的值</span>
+incrby key <span class="token namespace">[increment]</span>
+
+<span class="token comment"># 可以操作浮点值</span>
+incrbyfloat key <span class="token namespace">[increment]</span>
+</code></pre></div><ul><li>设置数值数据减少指定范围的值</li></ul> <div class="language-PowerShell extra-class"><pre class="language-powershell"><code><span class="token comment"># 减少1</span>
+decr key
+
+<span class="token comment"># 减少指定的值</span>
+decrby key increment
+</code></pre></div><ul><li><p>string做为数值操作</p> <ol><li><p>string在redi内部存储默认就是一个字符串，当遇到增减类操作incr或者decr时会自动转成数值型进行计算。</p></li> <li><p>redis所有的操作都是原子性的，采用单线程处理所有业务。命令是一个一个执行的，因此无需考虑并发带来的影响</p></li> <li><p>注意：按数值进行操作的数据，如果原始数据不能转成数值或超越了redis数值上限范围，将报错。最大值 9223372036854775807</p></li></ol></li> <li><p>设置数据具有指定的生命周期</p></li></ul> <div class="language-PowerShell extra-class"><pre class="language-powershell"><code>setex key seconds value <span class="token operator">--</span> 秒
+
+psetex key milliseconds value <span class="token operator">--</span> 毫秒
+</code></pre></div><ol><li>string类型数据操作的注意事项</li></ol> <ul><li>数据最大存储量：512MB</li></ul> <h4 id="_4-hash类型"><a href="#_4-hash类型" class="header-anchor">#</a> 4.Hash类型</h4> <ol><li><h6 id="hash类型介绍"><a href="#hash类型介绍" class="header-anchor">#</a> hash类型介绍</h6> <ul><li><p>对一系列存储的数据进行编组，方便管理，典型应用 存储对象信息</p></li> <li><p>一个存储空间保存多个键值对数据</p></li> <li><p>hash类型：底层使用哈希表结构实现数据存储</p></li> <li><p>hash存储结构优化：当field较少时用类数组结构，当field较多时用HashMap结构</p></li></ul></li> <li><h6 id="hash类型数据的基本操作"><a href="#hash类型数据的基本操作" class="header-anchor">#</a> hash类型数据的基本操作</h6> <ul><li>添加、修改数据	<code>hset key field value</code></li> <li>获取数据   <code>hget key field</code> <code>hgetall key</code></li> <li>删除数据   <code>hdel key field1 [field2]</code></li> <li>添加、修改多个数据 <code>hmset key field1 value1 field2 value2 ...</code></li> <li>获取多个数据   <code>hmget key field1 field2 ...</code></li> <li>获取哈希表中字段的数量   <code>hlen key</code></li> <li>获取哈希表中是否存在指定的字段   <code>hexists key field</code></li></ul></li> <li><h6 id="hash类型数据的扩展操作"><a href="#hash类型数据的扩展操作" class="header-anchor">#</a> hash类型数据的扩展操作</h6> <ul><li><p>获取哈希表中所有的字段名或字段值</p> <div class="language-shell extra-class"><pre class="language-shell"><code>hkeys key
+hvals key
+</code></pre></div></li> <li><p>设置指定字段的数值数据增加指定范围的值</p> <div class="language-shell extra-class"><pre class="language-shell"><code>hincrby key field increment
+
+hincrbyfloat key field increment
+</code></pre></div></li></ul></li> <li><h6 id="hash类型数据操作的注意事项"><a href="#hash类型数据操作的注意事项" class="header-anchor">#</a> hash类型数据操作的注意事项</h6> <ul><li>hash类型下的value只能存储字符串，不允许存储其他数据类型，不存在嵌套现象，如果数据未获取到，对应的值为 nil</li> <li>每个hash可以存储 <code>2^32 -1</code> 个键值对</li> <li>hash类型十分贴近对象的数据存储方式，并且可以灵活添加删除对象属性。但hash设计的初衷不是为了存储大量对象而设计的，切记不可滥用，更不可以将hash作为对象列表使用</li> <li><code>hgetall</code> 操作可以获取全部属性，如果内部field过多，遍历整体数据库效率就会很低，有可能成为数据访问的瓶颈。</li></ul></li></ol> <h4 id="_5-list类型"><a href="#_5-list类型" class="header-anchor">#</a> 5. list类型</h4> <ol><li><h6 id="list类型简单介绍"><a href="#list类型简单介绍" class="header-anchor">#</a> list类型简单介绍</h6> <ul><li>数据存储需求：存储多个数据，并对数据进入存储空间的顺序进行区分</li> <li>存储结构：一个存储空间保存多个数据，且通过数据可以体现进入顺序</li> <li>list类型：保存多个数据，底层使用双向链表存储结构实现</li></ul></li> <li><h6 id="list类型基本操作"><a href="#list类型基本操作" class="header-anchor">#</a> list类型基本操作</h6> <ul><li><p>添加、修改数据</p> <div class="language-shell extra-class"><pre class="language-shell"><code>-- 从链表左边插入
+lpush key value1 <span class="token punctuation">[</span>value2<span class="token punctuation">]</span> <span class="token punctuation">..</span>.
+
+-- 从链表右边插入
+rpush key value1 <span class="token punctuation">[</span>value2<span class="token punctuation">]</span> <span class="token punctuation">..</span>.
+</code></pre></div></li> <li><p>获取数据</p> <div class="language-shell extra-class"><pre class="language-shell"><code>-- 查询从start-stop的数据
+lrange key start stop
+
+-- 查询当前index的数据
+lindex key index
+
+-- 获取当前key的list长度
+llen key
+</code></pre></div></li> <li><p>获取并移除数据</p> <div class="language-shell extra-class"><pre class="language-shell"><code>-- 从左边弹出数据
+lpop key
+
+-- 从右边弹出数据
+rpop key
+</code></pre></div></li></ul></li> <li><h6 id="list-类型数据扩展操作"><a href="#list-类型数据扩展操作" class="header-anchor">#</a> list 类型数据扩展操作</h6> <ul><li><p>规定时间内获取并移除数据</p> <div class="language-shell extra-class"><pre class="language-shell"><code>blpop key1 <span class="token punctuation">[</span>key2<span class="token punctuation">]</span> <span class="token function">timeout</span>
+
+brpop key1 <span class="token punctuation">[</span>key2<span class="token punctuation">]</span> <span class="token function">timeout</span>
+</code></pre></div></li> <li><p>移除指定数据</p> <div class="language-shell extra-class"><pre class="language-shell"><code>lrem key count value
+</code></pre></div></li></ul></li> <li><h6 id="list-类型数据操作注意事项"><a href="#list-类型数据操作注意事项" class="header-anchor">#</a> list 类型数据操作注意事项</h6> <ul><li>list 中保存的数据都是string类型的，数据总量是有限的，最多<code>2^32-1</code>个元素</li> <li>list 具有索引的概念，但是操作数据时通常以队列的形式进行入队出队操作，或以栈的形式进行入栈出栈操作</li> <li>获取全部数据操作结束索引设置为-1</li> <li>list 可以对数据进行分页操作，通常第一页的信息来自于list，第2页及更多的信息通过数据库的形式加载。</li></ul></li></ol> <h4 id="_6-set-类型"><a href="#_6-set-类型" class="header-anchor">#</a> 6. set 类型</h4> <ol><li><h6 id="set-类型基本介绍"><a href="#set-类型基本介绍" class="header-anchor">#</a> set 类型基本介绍</h6> <ul><li>存储需求：存储大量的数据，在查询方面提供更改的效率</li> <li>存储结构，能够确保大量的数据，高效的内部存储机制，便于查询</li> <li>set类型：与hash存储结构完全相同，仅存储键，不存储值，并且值是不允许重复的</li></ul></li> <li><h6 id="set-类型数据的基本操作"><a href="#set-类型数据的基本操作" class="header-anchor">#</a> set 类型数据的基本操作</h6> <ul><li>添加数据   <code>sadd key member1 [member2]</code></li> <li>获取全部数据   <code>smembers key</code></li> <li>删除数据   <code>srem key member1 [member2]</code></li> <li>获取集合数据总量   <code>scard key</code></li> <li>判断集合中是否包含指定数据   <code>sismember key member</code></li></ul></li> <li><h6 id="set-类型数据的扩展操作"><a href="#set-类型数据的扩展操作" class="header-anchor">#</a> set 类型数据的扩展操作</h6> <ul><li><p>随机获取集合中指定数量的数据   <code>srandmember key [count]</code></p></li> <li><p>随机获取集合中的某个数据并将该数据移除集合   <code>spop key</code></p></li> <li><p><strong>Tips:redis 应用于随机推荐类信息检索，例如热点歌单推荐，热点新闻推荐，热卖旅游线路，应有APP推荐等</strong></p></li> <li><p>求两个集合的交、并、差集</p> <div class="language-shell extra-class"><pre class="language-shell"><code>-- 交集
+sinter key1 <span class="token punctuation">[</span>key2<span class="token punctuation">]</span>
+
+-- 并集
+sunion key1 <span class="token punctuation">[</span>key2<span class="token punctuation">]</span>
+
+-- 差集
+<span class="token function">sdiff</span> key1 <span class="token punctuation">[</span>key2<span class="token punctuation">]</span>
+</code></pre></div></li> <li><p>求两个集合的交、并、差集并存储到指定集合中</p> <div class="language-shell extra-class"><pre class="language-shell"><code>sinterstore destination key1 <span class="token punctuation">[</span>key2<span class="token punctuation">]</span>
+
+sunionstore destination key1 <span class="token punctuation">[</span>key2<span class="token punctuation">]</span>
+
+sdiffstore destination key1 <span class="token punctuation">[</span>key2<span class="token punctuation">]</span>
+</code></pre></div></li> <li><p>将指定数据从原始集合中移动到目标集合中</p> <div class="language-shell extra-class"><pre class="language-shell"><code>smove <span class="token builtin class-name">source</span> destination member
+</code></pre></div></li></ul></li> <li><h6 id="set-类型数据操作的注意事项"><a href="#set-类型数据操作的注意事项" class="header-anchor">#</a> set 类型数据操作的注意事项</h6> <ul><li>set 类型不允许数据重复，如果添加的数据在set中已经存在，将只保留一份</li> <li>set 虽然与hash的存储结构相同，但是无法启用hash中存储值的空间</li></ul></li></ol> <h4 id="_6-sorted-set-类型"><a href="#_6-sorted-set-类型" class="header-anchor">#</a> 6. sorted_set 类型</h4> <ol><li><h6 id="sorted-set-基本介绍"><a href="#sorted-set-基本介绍" class="header-anchor">#</a> sorted_set 基本介绍</h6> <ul><li>数据排序有利于数据的有效展示，需要提供提供一种可以根据自身特征进行排序的方式</li> <li>在set的存储结构上添加可排序字段</li></ul></li> <li><h6 id="sorted-set-类型数据的基本操作"><a href="#sorted-set-类型数据的基本操作" class="header-anchor">#</a> sorted_set 类型数据的基本操作</h6> <ul><li><p>添加数据</p> <div class="language-shell extra-class"><pre class="language-shell"><code>zadd key score1 member1 <span class="token punctuation">[</span>score2 member2<span class="token punctuation">]</span>
+</code></pre></div></li> <li><p>获取全部数据</p> <div class="language-shell extra-class"><pre class="language-shell"><code>-- 加上 withscores 带上分数
+
+-- 由小到大
+zrange key start stop <span class="token punctuation">[</span>WITHSCORES<span class="token punctuation">]</span>
+
+-- 由大到小
+zrevrange key start stop <span class="token punctuation">[</span>WITHSCORES<span class="token punctuation">]</span>
+</code></pre></div></li> <li><p>删除数据</p> <div class="language-she extra-class"><pre class="language-text"><code>zrem key member [member...]
+</code></pre></div></li> <li><p>按条件获取数据</p> <div class="language- extra-class"><pre class="language-text"><code>zrangebyscore key min max [WITHSCORES] [LIMIT]
+
+zrevrangescore key max min [WITHSCORES] [LIMIT]
+</code></pre></div></li> <li><p>按条件删除数据</p> <div class="language- extra-class"><pre class="language-text"><code>zremrangebyrank key start stop
+
+zremrangebyscore key min max
+</code></pre></div></li> <li><p>获取集合数据总量</p> <div class="language- extra-class"><pre class="language-text"><code>zcard key
+
+zcount key min max
+</code></pre></div></li> <li><p>集合交、并操作</p> <div class="language- extra-class"><pre class="language-text"><code>zinterstore destination numkeys key [key ...] [AGGREGATE SUM|MIN|MAX]
+
+zunionstore destination numkeys key [key ...] [AGGREGATE SUM|MIN|MAX]
+</code></pre></div></li></ul> <p><font color="#0099ff">注意：</font></p> <ul><li><p><font color="#0099ff">min与max用于限定搜索查询的条件</font></p></li> <li><p><font color="#0099ff">start与stop用于限定查询范围，作用于索引，表示开始和结束索引</font></p></li> <li><p><font color="#0099ff">offset与count用于限定查询范围，作用于查询结果，表示开始位置和数据总量</font></p></li></ul></li> <li><h6 id="sorted-set-类型数据的扩展操作"><a href="#sorted-set-类型数据的扩展操作" class="header-anchor">#</a> sorted_set 类型数据的扩展操作</h6> <ul><li><p>获取数据对应的索引</p> <div class="language- extra-class"><pre class="language-text"><code>zrank key member
+
+zrevrank key member
+</code></pre></div></li> <li><p>score 值获取与修改</p> <div class="language- extra-class"><pre class="language-text"><code>zscore key member
+
+zincrby key increment member
+</code></pre></div></li></ul></li> <li><h6 id="sorted-set-类型数据操作的注意事项"><a href="#sorted-set-类型数据操作的注意事项" class="header-anchor">#</a> sorted_set 类型数据操作的注意事项</h6> <ul><li>score 保存的数据存储空间是64位，如果是整数范围是-9007199254740992~9007199254740992</li> <li>score 保存的数据也可以是一个双精度的double值，基于双精度浮点数的特征，可能会丢失精度，使用时要慎重</li> <li>sorted_set 底层存储还是基于set 结构的，因此数据不能重复，如果重复添加相同的数据，score值将被反复覆盖，保留最后一次修改的结果</li></ul></li></ol></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/xiaomizhou-note/assets/js/app.94440c6d.js" defer></script><script src="/xiaomizhou-note/assets/js/2.26962873.js" defer></script><script src="/xiaomizhou-note/assets/js/19.e3d08432.js" defer></script>
+  </body>
+</html>

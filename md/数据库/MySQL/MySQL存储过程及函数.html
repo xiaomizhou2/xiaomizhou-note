@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MySQL存储过程及函数 | 小米粥的主页</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/xiaomizhou-note/img/index/logo.png">
+    <meta name="description" content=" ">
+    
+    <link rel="preload" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css" as="style"><link rel="preload" href="/xiaomizhou-note/assets/js/app.94440c6d.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/2.26962873.js" as="script"><link rel="preload" href="/xiaomizhou-note/assets/js/15.60cce906.js" as="script"><link rel="prefetch" href="/xiaomizhou-note/assets/js/10.9eb7487c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/11.0def2499.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/12.8635db46.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/13.25910b4c.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/14.7705ca2f.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/16.21956f59.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/17.0fd58fdc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/18.46c7555a.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/19.e3d08432.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/20.a37b49d3.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/21.91702eeb.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/3.dd292d4b.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/4.d6cdcb57.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/5.4f712cfc.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/6.d7e152ce.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/7.d2f588b2.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/8.6fe0feb4.js"><link rel="prefetch" href="/xiaomizhou-note/assets/js/9.e32712f1.js">
+    <link rel="stylesheet" href="/xiaomizhou-note/assets/css/0.styles.185fa772.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/xiaomizhou-note/" class="home-link router-link-active"><img src="/xiaomizhou-note/img/index/logo.png" alt="小米粥的主页" class="logo"> <span class="site-name can-hide">小米粥的主页</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>阅读指南</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/xiaomizhou-note/md/guide-to-reading.html" class="sidebar-link">/md/guide-to-reading.html</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="mysql存储过程及函数"><a href="#mysql存储过程及函数" class="header-anchor">#</a> MySQL存储过程及函数</h1> <h3 id="_1-存储过程和函数概述"><a href="#_1-存储过程和函数概述" class="header-anchor">#</a> 1. 存储过程和函数概述</h3> <p>​	存储过程和函数是<strong>事先经过编译并存储</strong>在数据库中的一段SQL语句的集合，调用存储过程和函数可以简化应用开发人员的很多工作，减少数据在数据库和应用服务器之间的传输，对于提高数据处理的效率是有好处的。</p> <p>存储过程和函数的区别在于函数必须有返回值,而存储过程没有</p> <p>函数：是一个有返回值的过程</p> <p>过程：是一个没有返回值的函数</p> <h3 id="_2-创建及调用存储过程"><a href="#_2-创建及调用存储过程" class="header-anchor">#</a> 2. 创建及调用存储过程</h3> <div class="language-mysql extra-class"><pre class="language-text"><code>CREATE PROCEDURE procedure_name([proc_parameter[, ...]])
+begin
+-- SQL语句
+end;
+
+########示例#############
+CREATE PROCEDURE pro_test1()
+begin
+SELECT 'HELLO MYSQL';
+end;
+
+DELIMITER 该关键字用来声明SQL语句的分隔符，默认情况下MySQL
+
+-- 调用存储过程
+CALL procedure_name
+</code></pre></div><h3 id="_3-查看及删除存储过程"><a href="#_3-查看及删除存储过程" class="header-anchor">#</a> 3. 查看及删除存储过程</h3> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 查询db_name数据库中的所有的存储过程
+SELECT name FROM mysql.proc WHERE db = 'db_name';
+
+-- 查询存储过程的状态信息
+SHOW PROCEDURE status;
+
+-- 查询某个存储过程的定义
+SHOW CREATE PROCEDURE proc_name;
+
+-- 删除存储过程
+DROP PROCEDURE [IF EXISTS] proc_name;
+</code></pre></div><h3 id="_4-语法"><a href="#_4-语法" class="header-anchor">#</a> 4. 语法</h3> <p>存储过程是可以编程的，意味着可以使用变量、表达式、控制结构来完成比较复杂的功能</p> <h5 id="_4-1-变量"><a href="#_4-1-变量" class="header-anchor">#</a> 4.1 变量</h5> <ul><li><p>DECLARE</p> <p>通过DECLARE可以定义一个局部变量，该变量的作用范围只能在BEGIN...END块中。</p> <div class="language-mysql extra-class"><pre class="language-text"><code>DECLARE var_name[, ...] type [DEFAUIT value]
+</code></pre></div><p>示例：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>CREATE PROCEDURE pro_test2()
+BEGIN
+	DECLARE num int DEFAULT 5;
+	SELECT num;
+END;
+</code></pre></div></li> <li><p>SET</p> <p>直接赋值使用SET，可以赋常量或者赋表达式，具体语法如下：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>SET var_name = expr[, var_name = expr]...
+</code></pre></div><p>示例：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>CREATE PROCEDURE pro_test3()
+BEGIN
+	DECLARE NAME VARCHAR(20);
+	SET NAME = 'MYSQL';
+	SELECT NAME;
+END;
+</code></pre></div><p>也可以使用SELECT...INTO方式进行赋值操作：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>CREATE PROCEDURE pro_test5()
+BEGIN
+	DECLARE countnum int;
+	SELECT COUNT(*) INTO countnum FROM city;
+	SELECT countnum;
+END;
+</code></pre></div></li></ul> <h5 id="_4-2-if-条件判断"><a href="#_4-2-if-条件判断" class="header-anchor">#</a> 4.2 if 条件判断</h5> <p>语法结构：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>IF search_condition THEN statement_list
+[ELSEIF search_condition THEN statement_list] ...
+[ELSE statement_list]
+END IF;
+</code></pre></div><p>示例：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 根据年龄判断所处年龄段
+
+0-18 -- 未成年
+
+18-30 -- 青少年
+
+30-50 -- 中年
+
+50以上 -- 老年
+
+# 实现语法
+CREATE PROCEDURE pro_test4()
+BEGIN
+	-- 定义变量
+	DECLARE age int DEFAULT 18;
+	DECLARE age_desc VARCHAR(50) DEFAULT '';
+	-- IF判断语句
+	IF age &gt;= 0 AND age &lt; 18 THEN SET age_desc = '未成年';
+	ELSEIF age &gt;= 18 AND age &lt;= 30 THEN SET age_desc = '青少年';
+	ELSEIF age &gt; 30 AND age &lt;= 50 THEN SET age_desc = '中年';
+	ELSE SET age_desc = '老年';
+	END IF;
+	-- 查询
+	SELECT age_desc;
+END;
+</code></pre></div><h5 id="_4-3-传递参数"><a href="#_4-3-传递参数" class="header-anchor">#</a> 4.3 传递参数</h5> <p>语法格式：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>CREATE PROCEDURE proc_name([in / out / inout] 参数名 参数类型)
+
+IN：该参数可以作为输入，也就是需要调用方传入值，默认
+OUT：该参数作为输出，也就是该参数可以作为返回值
+INOUT：既可以作为输入参数吗，也可以作为输出参数
+</code></pre></div><ul><li><p>IN - 输入</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 根据定义的年龄变量，判断年龄段信息
+CREATE PROCEDURE pro_test5(in age int)
+BEGIN
+	DECLARE age_desc VARCHAR(50) DEFAULT '';
+	-- IF判断语句
+	IF age &gt;= 0 AND age &lt; 18 THEN SET age_desc = '未成年';
+	ELSEIF age &gt;= 18 AND age &lt;= 30 THEN SET age_desc = '青少年';
+	ELSEIF age &gt; 30 AND age &lt;= 50 THEN SET age_desc = '中年';
+	ELSE SET age_desc = '老年';
+	END IF;
+	-- 查询
+	SELECT age_desc;
+END;
+</code></pre></div></li> <li><p>OUT-输出</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 根据定义的年龄变量，获取年龄段信息
+CREATE PROCEDURE pro_test6(in age int, out age_desc varchar(50))
+BEGIN
+	-- IF判断语句
+	IF age &gt;= 0 AND age &lt; 18 THEN SET age_desc = '未成年';
+	ELSEIF age &gt;= 18 AND age &lt;= 30 THEN SET age_desc = '青少年';
+	ELSEIF age &gt; 30 AND age &lt;= 50 THEN SET age_desc = '中年';
+	ELSE SET age_desc = '老年';
+	END IF;
+END;
+
+-- 调用存储过程
+CALL pro_test6(20, @age_desc); 
+
+SELECT @age_desc;
+</code></pre></div></li> <li><p><strong>小知识</strong></p> <p>@age_desc：用户会话变量，代表整个会话过程中他是有作用的，这个类似于全局变量一样</p> <p>@@global.sort_buffer_size：这种叫做系统变量</p></li></ul> <h5 id="_4-4-case-结构"><a href="#_4-4-case-结构" class="header-anchor">#</a> 4.4 case 结构</h5> <p>语法结构：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 方式一
+CASE case_value
+	WHEN when_value THEN statement_list
+	[WHEN when_value THEN statement_list] ...
+	[ELSE statement_list]
+END CASE;
+
+-- 方式二
+CASE
+	WHEN search_condition THEN statement_list
+	[WHEN search_condition THEN statement_list] ...
+	[ELSE statement_list]
+END CASE;
+</code></pre></div><p>示例：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 给定一个月份，然后计算出所在的季度
+CREATE PROCEDURE pro_test7(in month int, out desc varchar(50))
+BEGIN
+	CASE 
+	WHEN month &lt;= 3 AND month &gt;= 1 THEN SET desc = '春'
+	WHEN month &lt;= 6 AND month &gt;= 4 THEN SET desc = '夏'
+	WHEN month &lt;= 9 AND month &gt;= 7 THEN SET desc = '秋'
+	ELSE SET desc = '冬'
+	END CASE;
+END;
+</code></pre></div><h5 id="_4-5-while循环"><a href="#_4-5-while循环" class="header-anchor">#</a> 4.5 while循环</h5> <p>语法结构：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>WHILE search_condition DO
+	statement_list
+END WHILE;
+</code></pre></div><p>示例：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 计算从1加到n的值
+CREATE PROCEDURE pro_test8(n int)
+BEGIN
+	DECLARE total int DEFAULT 0;
+	DECLARE start int DEFAULT 0;
+	
+	WHILE start &lt;= n DO
+	SET total = total + start;
+	SET start++;
+	END WHILE;
+	
+	SELECT total;
+END;
+</code></pre></div><h5 id="_4-6-repeat循环"><a href="#_4-6-repeat循环" class="header-anchor">#</a> 4.6 repeat循环</h5> <p>有条件的循环控制语句，当满足条件的时候退出循环。while是满足条件才执行，repeat是满足条件就推出循环。</p> <p>语法结构：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>REPEAT
+	statement_list
+	UNTIL search_condition
+END REPEAT;
+</code></pre></div><p>示例：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 计算从1加到n的值
+CREATE PROCEDURE pro_test9(n int)
+BEGIN
+	DECLARE total int DEFAULT 0;
+	
+	REPEAT
+	SET total = total + n;
+	SET n = n - 1;
+	UNTIL n = 0
+	END REPEAT;
+	
+	SELECT total;
+END;
+</code></pre></div><h5 id="_4-7-loop循环"><a href="#_4-7-loop循环" class="header-anchor">#</a> 4.7 loop循环</h5> <p>LOOP实现简单的循环，退出循环的条件需要使用其他的语句定义，通常可以使用LEAVE语句实现，具体语法如下：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>[begin_label:] LOOP
+	statement_list
+END LOOP [end_label]
+</code></pre></div><p>如果不在statement_list 中增加退出循环的语句，那么LOOP语句可以用来实现简单的死循环。</p> <p>示例：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 计算从1加到n的值
+CREATE PROCEDURE pro_test10(n int)
+BEGIN
+	DECLARE total int DEFAULT 0;
+	
+	ins: LOOP
+	IF n &lt;=0 THEN 
+		LEAVE ins;
+	END IF;
+	SET total = total + n;
+	SET n = n - 1;
+	END LOOP ins;
+	
+	SELECT total;
+END;
+</code></pre></div><h5 id="_4-8-游标、光标"><a href="#_4-8-游标、光标" class="header-anchor">#</a> 4.8 游标、光标</h5> <p>游标是用来存储查询结果集的数据类型，在存储过程和函数中可以使用光标对结果集进行循环的处理。光标的使用包括光标的声明、OPEN、FETCH和CLOSE,其语法分别如下：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 声明光标
+DECLARE cursor_name CURSOR FOR select_statement;
+
+-- OPEN光标
+OPEN cursor_name;
+
+-- FETCH 光标
+FETCH cursor_name INTO var_name[, var_name] ...
+
+-- CLOSE 光标
+CLOSE cursor_name;
+</code></pre></div><h3 id="_5-存储函数"><a href="#_5-存储函数" class="header-anchor">#</a> 5. 存储函数</h3> <p>语法结构：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>CREATE FUNCTION function_name([param type ...])
+RETURNS type
+BEGIN
+	...
+END;
+</code></pre></div><p>示例：</p> <div class="language-mysql extra-class"><pre class="language-text"><code>-- 定义一个存储过程，请求满足条件的总记录数
+CREATE FUNCTION count_city(countryId int)
+RETURNS int
+BEGIN
+	DECLARE cnum int;
+	
+	SELECT count(*) INTO cnum FROM city country_id = countryId;
+	
+	return cnum;
+END;
+
+-- 调用存储函数
+SELECT count_city(1);
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/xiaomizhou-note/assets/js/app.94440c6d.js" defer></script><script src="/xiaomizhou-note/assets/js/2.26962873.js" defer></script><script src="/xiaomizhou-note/assets/js/15.60cce906.js" defer></script>
+  </body>
+</html>
